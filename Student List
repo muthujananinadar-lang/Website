@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Directory</title>
+
+    <style>
+        /* General styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f8;
+            color: #222;
+        }
+
+        /* Navigation bar */
+        nav {
+            background-color: #243955;
+            color: white;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 37px;
+        }
+
+        nav h2 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 16px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 11px;
+            transition: color 0.2s;
+        }
+
+        nav ul li a:hover {
+            color: #a9d1ff;
+        }
+
+        /* Main content */
+        main {
+            padding: 30px 16px;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 21px;
+            color: #111;
+        }
+
+        /* Search box */
+        .search-box {
+            width: 267px;
+            max-width: 100%;
+            padding: 8px;
+            margin-bottom: 19px;
+            border: 1px solid #c6c6c6;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 10px;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: #243955;
+            box-shadow: 0 0 0 2px rgba(36, 57, 85, 0.1);
+        }
+
+        /* Student cards */
+        .student-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .student-card {
+            background-color: white;
+            border: 1px solid #dedede;
+            border-radius: 4px;
+            padding: 10px;
+            min-height: 56px;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .student-card:hover {
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .student-card h3 {
+            font-size: 11px;
+            margin-bottom: 9px;
+            color: #111;
+        }
+
+        .student-card p {
+            font-size: 12px;
+            color: #333;
+        }
+
+        /* Empty search message */
+        .empty-message {
+            display: none;
+            width: 300px;
+            max-width: 100%;
+            padding: 15px;
+            background: white;
+            border: 1px solid #dedede;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        /* About section */
+        .about-card {
+            max-width: 600px;
+            background: white;
+            padding: 22px;
+            border: 1px solid #dedede;
+            border-radius: 6px;
+            line-height: 1.7;
+        }
+
+        .about-card p {
+            margin-bottom: 12px;
+        }
+
+        /* Home section */
+        .home-card {
+            max-width: 600px;
+            background: white;
+            padding: 22px;
+            border: 1px solid #dedede;
+            border-radius: 6px;
+            line-height: 1.7;
+        }
+
+        .home-card button {
+            margin-top: 14px;
+            padding: 10px 16px;
+            background: #243955;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .home-card button:hover {
+            background: #34577f;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            nav {
+                padding: 12px;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            nav h2 {
+                font-size: 15px;
+            }
+
+            nav ul {
+                gap: 12px;
+            }
+
+            main {
+                padding: 25px 12px;
+            }
+
+            .student-list,
+            .empty-message {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+    <nav>
+        <h2>Student Directory</h2>
+
+        <ul>
+            <li><a href="#home" data-section="home">Home</a></li>
+            <li><a href="#students" data-section="students">Students</a></li>
+            <li><a href="#about" data-section="about">About</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <!-- Home page -->
+        <section id="home">
+            <h1>Welcome to Student Directory</h1>
+
+            <div class="home-card">
+                <p>Welcome to our Student Directory website!</p>
+                <p>Explore student information, search for students by name,
+                   and discover the courses they are studying.</p>
+
+                <button onclick="showSection('students')">
+                    View Students
+                </button>
+            </div>
+        </section>
+
+        <!-- Students page -->
+        <section id="students" class="active">
+            <h1>Student List</h1>
+
+            <input
+                type="text"
+                id="searchInput"
+                class="search-box"
+                placeholder="Search student by name..."
+                aria-label="Search student by name"
+            >
+
+            <div class="student-list" id="studentList">
+
+                <div class="student-card" data-name="aarav sharma">
+                    <h3>Aarav Sharma</h3>
+                    <p>Course: BSc IT</p>
+                </div>
+
+                <div class="student-card" data-name="priya patel">
+                    <h3>Priya Patel</h3>
+                    <p>Course: BSc IT</p>
+                </div>
+
+                <div class="student-card" data-name="rahul mehta">
+                    <h3>Rahul Mehta</h3>
+                    <p>Course: BSc CS</p>
+                </div>
+
+                <div class="student-card" data-name="sneha desai">
+                    <h3>Sneha Desai</h3>
+                    <p>Course: BSc IT</p>
+                </div>
+
+                <div class="student-card" data-name="arjun shah">
+                    <h3>Arjun Shah</h3>
+                    <p>Course: BSc CS</p>
+                </div>
+
+                <div class="student-card" data-name="neha singh">
+                    <h3>Neha Singh</h3>
+                    <p>Course: BSc IT</p>
+                </div>
+
+                <div class="student-card" data-name="rohan verma">
+                    <h3>Rohan Verma</h3>
+                    <p>Course: BCA</p>
+                </div>
+
+                <div class="student-card" data-name="isha joshi">
+                    <h3>Isha Joshi</h3>
+                    <p>Course: BSc CS</p>
+                </div>
+
+            </div>
+
+            <p class="empty-message" id="emptyMessage">
+                No students found. Try another name.
+            </p>
+        </section>
+
+        <!-- About page -->
+        <section id="about">
+            <h1>About Us</h1>
+
+            <div class="about-card">
+                <p><strong>Student Directory</strong></p>
+
+                <p>
+                    Student Directory is a simple website designed to display
+                    student names and their courses in an organized format.
+                </p>
+
+                <p>
+                    <strong>Features:</strong>
+                </p>
+
+                <p>• View student information</p>
+                <p>• Search students by name</p>
+                <p>• Navigate between website sections</p>
+                <p>• Responsive design for mobile and desktop</p>
+
+                <p>
+                    <strong>Technologies:</strong> HTML, CSS and JavaScript.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Navigate between website sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll("main section");
+
+            sections.forEach(function(section) {
+                section.classList.remove("active");
+            });
+
+            const selectedSection = document.getElementById(sectionId);
+
+            if (selectedSection) {
+                selectedSection.classList.add("active");
+            }
+
+            // Update the URL hash
+            history.replaceState(null, "", "#" + sectionId);
+
+            // Reset search when opening Students
+            if (sectionId === "students") {
+                document.getElementById("searchInput").value = "";
+                filterStudents();
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // Navigation link functionality
+        document.querySelectorAll("nav a").forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                showSection(this.dataset.section);
+            });
+        });
+
+        // Search students by name
+        function filterStudents() {
+            const searchInput = document
+                .getElementById("searchInput")
+                .value.toLowerCase()
+                .trim();
+
+            const studentCards = document.querySelectorAll(".student-card");
+            const emptyMessage = document.getElementById("emptyMessage");
+
+            let visibleCount = 0;
+
+            studentCards.forEach(function(card) {
+                const studentName = card.dataset.name;
+
+                if (studentName.includes(searchInput)) {
+                    card.style.display = "block";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            emptyMessage.style.display =
+                visibleCount === 0 ? "block" : "none";
+        }
+
+        document
+            .getElementById("searchInput")
+            .addEventListener("input", filterStudents);
+
+        // Open the appropriate section when loading a URL with a hash
+        window.addEventListener("DOMContentLoaded", function() {
+            const sectionId = window.location.hash.substring(1);
+            const validSections = ["home", "students", "about"];
+
+            if (validSections.includes(sectionId)) {
+                showSection(sectionId);
+            } else {
+                showSection("students");
+            }
+        });
+    </script>
+
+</body>
+</html>
